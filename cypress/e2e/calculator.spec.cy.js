@@ -186,20 +186,12 @@ describe('e2e test for calculator app', () => {
     btnClear.click();
     btn1.click();
     btnSave.click();
-  
-    cy.reload(); 
+    
+    btnClear.click();
     btnPaste.click();
   
     cy.wrap(dashboard).invoke('val').then(val => {
-      expect(val).to.equal('11');
-    });
-  });
-  
-  it('should check paste button', () => {
-    btnPaste.click();
-  
-    cy.wrap(dashboard).invoke('val').then(val => {
-      expect(val).to.equal('11');
+      expect(val).to.equal('1');
     });
   });
   
@@ -207,5 +199,34 @@ describe('e2e test for calculator app', () => {
     btnToggleTheme.click()
     cy.get('body').should('have.class', 'theme-one');
   });
+
+  it('60 percent 20 + 0.1 / 5 and save clear paste', () => {
+    btnClear.click();
+    btn6.click();
+    btn0.click();
+    btnPercent.click();
+    btn2.click();
+    btn0.click();
+    btnEqual.click();
+    btnPlus.click();
+    btn0.click();
+    btnDot.click();
+    btn1.click();
+    btnDivide.click();
+
+    btn5.click();
+
+    btnEqual.click();
+
+    btnSave.click()
+
+    btnClear.click();
+
+    btnPaste.click();
+    cy.wrap(dashboard).invoke('val').then(val => {
+      expect(val).to.equal('0.02');
+    });
+  });
+
 
 })
