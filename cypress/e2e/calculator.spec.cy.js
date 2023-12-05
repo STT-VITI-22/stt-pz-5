@@ -1,5 +1,5 @@
 describe('e2e test for calculator app', () => {
-  let bnt1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0;
+  let btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0;
   let btnPlus, btnMinus, btnEqual, dashboard, btnClear, btndivision, btnmultiply, btndot, btnplusminus, btnpercentages, btnsave, btnpaste, btntheme;
   let body;
 
@@ -12,7 +12,7 @@ describe('e2e test for calculator app', () => {
       btn0 = $el
     });
     cy.get('[data-test="btn-1"]').then(($el) => {
-      bnt1 = $el
+      btn1 = $el
     });
     btn2 = cy.get('[data-test="btn-2"]').then(($el) => {
       btn2 = $el
@@ -104,7 +104,7 @@ describe('e2e test for calculator app', () => {
   })
   it('should check result of expression 1+2+3+4-5-6-7-8-9', () => {
     btnClear.click()
-    bnt1.click()
+    btn1.click()
     btnPlus.click()
     btn2.click()
     btnPlus.click()
@@ -129,10 +129,10 @@ describe('e2e test for calculator app', () => {
   })
   it('should check result expression 10/10', () => {
     btnClear.click()
-    bnt1.click()
+    btn1.click()
     btn0.click()
     btndivision.click()
-    bnt1.click()
+    btn1.click()
     btn0.click()
     btnEqual.click()
     cy.wrap(dashboard).invoke('val').then(val => {
@@ -146,7 +146,7 @@ describe('e2e test for calculator app', () => {
     btndot.click()
     btn5.click()
     btnmultiply.click()
-    bnt1.click()
+    btn1.click()
     btn0.click()
     btnEqual.click()
 
@@ -159,7 +159,7 @@ describe('e2e test for calculator app', () => {
     btnClear.click()
     btn0.click()
     btndot.click()
-    bnt1.click()
+    btn1.click()
     btnplusminus.click()
     btnmultiply.click()
     btn9.click()
@@ -172,10 +172,10 @@ describe('e2e test for calculator app', () => {
 
   it('should calculate 10 percent of 1,000', () => {
     btnClear.click()
-    bnt1.click()
+    btn1.click()
     btn0.click()
     btnpercentages.click()
-    bnt1.click()
+    btn1.click()
     btn0.click()
     btn0.click()
     btn0.click()
@@ -201,24 +201,27 @@ describe('e2e test for calculator app', () => {
     btn8.click()
     btnEqual.click()
     btnsave.click()
-    btnClear.click()
-    btnpaste.click()
     cy.wrap(dashboard).invoke('val').then(val => {
       expect(val).to.equal('228');
     })
   })
 
   it('should check paste button', () => {
+    btnClear.click()
+    btn8.click()
+    btnsave.click()
+    btnClear.click()
     btnpaste.click()
     cy.wrap(dashboard).invoke('val').then(val => {
-      expect(val).to.equal('228');
+      expect(val).to.equal('8');
     })
   })
 
   it('should check change theme, toggle theme button', () => {
     btntheme.click()
-    cy.get('[data-test="btn-minus"]').should('have.css', 'background-color')
-      .and('eq', 'green')
+    cy.get(btnMinus).should('have.css', 'background-color', 'rgba(0, 0, 0, 0)');
+    cy.get(body).invoke('attr', 'class').then(themeClass => {
+      expect(themeClass).to.not.include('theme-one');
+    });
   })
-
 })
